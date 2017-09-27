@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>pmilet.DomainEvents</id>
+    <id>pmilet.DomainEvents.DomainEvents</id>
     <version>1.0.0</version>
     <title>pmilet DomainEvents</title>
     <authors>Pierre Milet</authors>
     <owners>Pierre Milet</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <licenseUrl></licenseUrl>
+    <projectUrl>https://github.com/pmilet/domainevents</projectUrl>
+    <iconUrl></iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>pmilet DomainEvents</description>
-    <releaseNotes></releaseNotes>
+    <description>DomainEvents</description>
+    <releaseNotes>First release</releaseNotes>
     <copyright>Copyright 2017</copyright>
-    <tags>Platform DomainEvents</tags>
+    <tags>DDD DomainEvent</tags>
     <dependencies>
     </dependencies>
   </metadata>
