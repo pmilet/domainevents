@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>pierreml DomainEvents</Description>
+    <Authors>Pierre Milet</Authors>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <AssemblyName>Iberfabric.DomainEvents</AssemblyName>
+    <PackageId>pierreml.DomainEvents</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+</Project>
