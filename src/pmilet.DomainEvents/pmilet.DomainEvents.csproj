@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>pierreml DomainEvents</Description>
+    <Description>pmilet DomainEvents</Description>
     <Authors>Pierre Milet</Authors>
     <TargetFrameworks>net461</TargetFrameworks>
-    <AssemblyName>Iberfabric.DomainEvents</AssemblyName>
-    <PackageId>pierreml.DomainEvents</PackageId>
+    <AssemblyName>pmilet.DomainEvents</AssemblyName>
+    <PackageId>pmilet.DomainEvents</PackageId>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

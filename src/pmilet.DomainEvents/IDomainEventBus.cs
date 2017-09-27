@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace pierreml.DomainEvents
+namespace pmilet.DomainEvents
 {
     public interface IDomainEventBus
     {

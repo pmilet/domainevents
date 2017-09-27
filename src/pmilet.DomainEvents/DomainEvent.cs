@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace pierreml.DomainEvents
+namespace pmilet.DomainEvents
 {
     public class DomainEvent : IDomainEvent
     {

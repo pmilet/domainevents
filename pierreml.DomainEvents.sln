@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nuget.config = nuget.config
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pierreml.DomainEvents", "src\pierreml.DomainEvents\pierreml.DomainEvents.csproj", "{76B608C7-7325-4F45-9146-48EC16775181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pmilet.DomainEvents", "src\pmilet.DomainEvents\pmilet.DomainEvents.csproj", "{EABD33D6-C210-4B6E-8E6C-32E4114C75B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +16,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{76B608C7-7325-4F45-9146-48EC16775181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76B608C7-7325-4F45-9146-48EC16775181}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76B608C7-7325-4F45-9146-48EC16775181}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76B608C7-7325-4F45-9146-48EC16775181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EABD33D6-C210-4B6E-8E6C-32E4114C75B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EABD33D6-C210-4B6E-8E6C-32E4114C75B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EABD33D6-C210-4B6E-8E6C-32E4114C75B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EABD33D6-C210-4B6E-8E6C-32E4114C75B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace pierreml.DomainEvents
+namespace pmilet.DomainEvents
 {
     public class DomainEventBus : IDomainEventBus
     {

@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>pierreml.DomainEvents</id>
+    <id>pmilet.DomainEvents</id>
     <version>1.0.0</version>
-    <title>pierreml DomainEvents</title>
+    <title>pmilet DomainEvents</title>
     <authors>Pierre Milet</authors>
     <owners>Pierre Milet</owners>
     <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
     <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
     <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>pierreml DomainEvents</description>
+    <description>pmilet DomainEvents</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>Platform DomainEvents</tags>
@@ -18,6 +18,6 @@
     </dependencies>
   </metadata>
   <files>
-	  <file src="bin\Release\**\pierreml.DomainEvents.dll" target="lib" />    
+	  <file src="bin\Release\**\pmilet.DomainEvents.dll" target="lib" />    
   </files>
 </package>
