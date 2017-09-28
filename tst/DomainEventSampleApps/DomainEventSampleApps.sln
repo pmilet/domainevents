@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiedraPapelTijeraApp", "PiedraPapelTijeraApp\PiedraPapelTijeraApp.csproj", "{30E1F780-45AE-42CB-8A55-8ADC6E61CE8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiedraPapelTijeraApp.Tests", "PiedraPapelTijeraApp.Tests\PiedraPapelTijeraApp.Tests.csproj", "{241A2D4F-A602-4004-AAA1-C0E3840DA1A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{30E1F780-45AE-42CB-8A55-8ADC6E61CE8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30E1F780-45AE-42CB-8A55-8ADC6E61CE8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30E1F780-45AE-42CB-8A55-8ADC6E61CE8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{241A2D4F-A602-4004-AAA1-C0E3840DA1A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241A2D4F-A602-4004-AAA1-C0E3840DA1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241A2D4F-A602-4004-AAA1-C0E3840DA1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241A2D4F-A602-4004-AAA1-C0E3840DA1A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

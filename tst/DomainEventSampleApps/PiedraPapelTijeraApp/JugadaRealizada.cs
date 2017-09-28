@@ -9,13 +9,14 @@ namespace PiedraPapelTijeraApp
 {
     public class JugadaRealizada : DomainEvent
     {
-        public JugadaRealizada(string nombre, Jugada jugada): base( "JugadaRealizada", "1.0")
+        public JugadaRealizada(JugadorType jugador, Jugada jugada)
+            : base( "JugadaRealizada", "1.0")
         {
-            Jugador = nombre;
+            Jugador = jugador;
             Jugada = jugada;
         }
 
-        public string Jugador { get; private set; }
+        public JugadorType Jugador { get; private set; }
         public Jugada Jugada { get; private set; }
 
     }

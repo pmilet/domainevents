@@ -11,42 +11,38 @@ namespace PiedraPapelTijeraApp
     {
         public int puntuacionJugador1 = 0;
         public int puntuacionJugador2 = 0;
-        public string jugador1;
-        public string jugador2;
         public Jugada ultimaJugadaJugador1 = Jugada.None;
         public Jugada ultimaJugadaJugador2 = Jugada.None;
 
+        IDomainEventBus _bus;
         public Partida( IDomainEventBus bus)
         {
+            _bus = bus;
             bus.Subscribe<JugadaRealizada>(this);
 
         }
 
-        public string Resultado {
-            get
-            {
+        public void FinalizarPartida()
+        {
                 if( puntuacionJugador1 > puntuacionJugador2 )
                 {
-                    return $" el ganador es {jugador1} por {puntuacionJugador1} a {puntuacionJugador2}";
+                    _bus.Publish<PartidaFinalizada>(new PartidaFinalizada(JugadorType.Jugador1));
                 }
                 else if(puntuacionJugador2 > puntuacionJugador1)
                 {
-                    return $" el ganador es {jugador2} por {puntuacionJugador2} a {puntuacionJugador1}";
+                    _bus.Publish<PartidaFinalizada>(new PartidaFinalizada(JugadorType.Jugador2));
                 }
                 else
                 {
-                    return $"empate a {puntuacionJugador2}";
+                    _bus.Publish<PartidaFinalizada>(new PartidaFinalizada(JugadorType.None));
                 }
-            }
         }
 
         public Guid SubscriberId => Guid.NewGuid();
 
         public void HandleEvent(JugadaRealizada domainEvent)
         {
-            DeterminarNombresJugadores(domainEvent);
-
-            DeterminarQuienJuega(domainEvent);
+            MemorizarJugada(domainEvent);
 
             EvaluarResultadoJugada();
         }
@@ -88,20 +84,18 @@ namespace PiedraPapelTijeraApp
             }
         }
 
-        private void DeterminarQuienJuega(JugadaRealizada domainEvent)
+        private void MemorizarJugada(JugadaRealizada domainEvent)
         {
-            if (domainEvent.Jugador == jugador1)
+            if (domainEvent.Jugador ==  JugadorType.Jugador1)
             {
                 ultimaJugadaJugador1 = domainEvent.Jugada;
             }
-            else if (domainEvent.Jugador == jugador2)
+            else if (domainEvent.Jugador == JugadorType.Jugador2)
             {
                 ultimaJugadaJugador2 = domainEvent.Jugada;
             }
         }
 
-        private void DeterminarNombresJugadores(JugadaRealizada domainEvent)
-        {
-        }
+        
     }
 }
