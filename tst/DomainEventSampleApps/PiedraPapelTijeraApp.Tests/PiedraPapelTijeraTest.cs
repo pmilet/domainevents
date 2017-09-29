@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using pmilet.DomainEvents;
 
 namespace PiedraPapelTijeraApp.Tests
 {
@@ -7,11 +8,11 @@ namespace PiedraPapelTijeraApp.Tests
     public class PiedraPapelTijeraTest
     {
 
-        pmilet.DomainEvents.IDomainEventBus _bus;
+        IDomainEventBus _bus;
         [TestInitialize]
         public void Setup()
         {
-            _bus = new pmilet.DomainEvents.DomainEventBus();
+            _bus = new DomainEventBus();
         }
 
         [TestMethod]
