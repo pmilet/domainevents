@@ -2,12 +2,13 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace pmilet.DomainEvents
 {
     public class DomainEventBus : IDomainEventBus
     {
-        private List<IDomainEvent> _events = new List<IDomainEvent>();
+        private ConcurrentBag<IDomainEvent> _events = new ConcurrentBag<IDomainEvent>();
         private ConcurrentDictionary<Type,object> _subscribers;
         private bool _publishing;
 
@@ -48,7 +49,8 @@ namespace pmilet.DomainEvents
                     Publish(typedEvent);
                 }
             }
-            _events.Clear();
+            var newBag = new ConcurrentBag<IDomainEvent>();
+            Interlocked.Exchange<ConcurrentBag<IDomainEvent>>(ref _events, newBag);
         }
 
         public void Publish<T>(T domainEvent) where T : IDomainEvent
