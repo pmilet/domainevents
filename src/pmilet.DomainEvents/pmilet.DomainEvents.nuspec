@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>pmilet.DomainEvents.DomainEvents</id>
-    <version>1.0.0.1</version>
+    <version>1.0.1</version>
     <title>pmilet DomainEvents</title>
     <authors>Pierre Milet</authors>
     <owners>Pierre Milet</owners>
