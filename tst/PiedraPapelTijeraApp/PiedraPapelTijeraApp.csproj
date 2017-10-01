@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\pmilet.DomainEvents\pmilet.DomainEvents.csproj" />
+    <ProjectReference Include="..\..\src\pmilet.DomainEvents\pmilet.DomainEvents.csproj" />
   </ItemGroup>
 
 </Project>
