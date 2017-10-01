@@ -45,7 +45,7 @@ namespace PiedraPapelTijeraApp.Tests
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "ReglasPiedraPapelTijera", "\tCon el fin de determinar el ganador\r\n\tComo arbitro del Juego\r\n\tQuiero saber el g" +
-                    "anador de cada uno de las posibilidades del juego", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "anador para cada uno de las jugadas del juego piedra papel tijera", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -84,12 +84,12 @@ namespace PiedraPapelTijeraApp.Tests
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Jugador1 juega Piedra y Jugador2 juega Tijera")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Dado que Piedra Gana a Tijera")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "ReglasPiedraPapelTijera")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("mytag")]
-        public virtual void Jugador1JuegaPiedraYJugador2JuegaTijera()
+        public virtual void DadoQuePiedraGanaATijera()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Jugador1 juega Piedra y Jugador2 juega Tijera", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dado que Piedra Gana a Tijera", new string[] {
                         "mytag"});
 #line 7
 this.ScenarioSetup(scenarioInfo);

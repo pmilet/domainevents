@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +8,7 @@ namespace pmilet.DomainEvents
     public class DomainEventBus : IDomainEventBus
     {
         private List<IDomainEvent> _events = new List<IDomainEvent>();
-        private Dictionary<Type,object> _subscribers;
+        private ConcurrentDictionary<Type,object> _subscribers;
         private bool _publishing;
 
         public DomainEventBus()
@@ -15,13 +16,13 @@ namespace pmilet.DomainEvents
             this._publishing = false;
         }
 
-        private Dictionary<Type,object> Subscribers
+        private ConcurrentDictionary<Type,object> Subscribers
         {
             get
             {
                 if (this._subscribers == null)
                 {
-                    this._subscribers = new Dictionary<Type,object>();
+                    this._subscribers = new ConcurrentDictionary<Type,object>();
                 }
 
                 return this._subscribers;
@@ -91,7 +92,7 @@ namespace pmilet.DomainEvents
         {
             if (!this._publishing && !Registered<T>(subscriber))
             {
-                this.Subscribers.Add(typeof(T), subscriber as IHandleDomainEvents<T>);
+                this.Subscribers.GetOrAdd(typeof(T), subscriber as IHandleDomainEvents<T>);
             }
         }
 
