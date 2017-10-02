@@ -13,17 +13,20 @@ This code is based on an article from Jimmy Boggard [A better domain events patt
 To create your DomainEvent class you could either inherit from the base Class DomainEvent or implement the IDomainEvent interface.
 
 ```csharp
-    public class JugadaRealizada : DomainEvent
+    /// <summary>
+    /// Represents the play choosen by a player
+    /// </summary>
+    public class PlayMade : DomainEvent
     {
-        public JugadaRealizada(JugadorType jugador, Jugada jugada)
-            : base( "JugadaRealizada", "1.0")
+        public PlayMade(PlayerType player, PlayType play)
+            : base( "PlayMade", "1.0")
         {
-            Jugador = jugador;
-            Jugada = jugada;
+            Player = player;
+            Play = play;
         }
 
-        public JugadorType Jugador { get; private set; }
-        public Jugada Jugada { get; private set; }
+        public PlayerType Player { get; private set; }
+        public PlayType Play { get; private set; }
 
     }
 ```
@@ -31,40 +34,56 @@ To create your DomainEvent class you could either inherit from the base Class Do
 To be able to publish events and subscribe to events our domain classes should use a DomainEventsBus instance that we can inject into their constructor: 
 
 ```cs
-   IDomainEventBus bus = new DomainEventBus();
-   Jugador j1 = new Jugador1(bus);
-   Jugador j2 = new Jugador2(bus);
-   Partida partida = new Partida(bus);
-   Resultados resultados = new Resultados(bus);
+  // we create the domain event bus and inject it into the objects of our domain model (normally done using a IoC container) 
+  IDomainEventBus bus = new DomainEventBus();
+  Player j1 = new Player1(bus);
+  Player j2 = new Player2(bus);
+  Match match = new Match(bus);
+  Outcome outcome = new Outcome(bus);
    ```
   To trigger an event immediately we should use the DomainEventBus publish method informing the type :
   
   ```cs
-  _bus.Publish<PartidaFinalizada>(new PartidaFinalizada(JugadorType.Jugador1));
+    //publish an event notifying that the match ended and Player1 is the winner
+    _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
  ```
  To record a delayed event we should use the add method, informing the type :
  
   ```cs
- _bus.Add<JugadaRealizada>(new JugadaRealizada( _jugador, jugada ));
- ```
+    //delayed event to notify of the move choosen by the player
+    _bus.Add<PlayMade>(new PlayMade( _player, play ));
+```
 To trigger all the delayed events we should use the commit method, informing the type (only the delayed events of this type will be triggered):
 ```cs
- _bus.Commit<JugadaRealizada>();
+    //commit all registered delayed events
+    _bus.Commit<PlayMade>();
 ```
-To subscribe a domain class to a specific event we should inherit our class from the IHandleEvent typed interface and subscribe to the bus
+To subscribe a domain class to a specific event we should inherit from the IHandleEvent interface and subscribe to the bus
 ```cs
- public class Resultados : IHandleDomainEvents<PartidaFinalizada>
+    public class Outcome : IHandleDomainEvents<MatchEnded>
     {
-```
-      ...
-```cs
-        public Resultados(IDomainEventBus bus)
+        PlayerType _lastWinner;
+        private readonly IDomainEventBus _bus;
+        public Outcome(IDomainEventBus bus)
         {
             _bus = bus;
-            bus.Subscribe<PartidaFinalizada>(this);
+            bus.Subscribe<MatchEnded>(this);
         }
 
-```
-      ...
+        public Guid SubscriberId => throw new NotImplementedException();
+
+        public void HandleEvent(MatchEnded domainEvent)
+        {
+            _lastWinner = domainEvent.Winner;
+        }
+
+        public PlayerType LastWinner()
+        {
+            return _lastWinner;
+        }
+
+    }
+    ```
+
 
 
