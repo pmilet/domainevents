@@ -12,9 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pmilet.DomainEvents", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tst", "tst", "{24DC9056-B4FE-4AAE-81BC-C8F0C9712715}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiedraPapelTijeraApp", "tst\PiedraPapelTijeraApp\PiedraPapelTijeraApp.csproj", "{B9A1171A-C9F0-40C2-B3A0-51C5C7B2A45D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StonePaperScissorsApp", "tst\PiedraPapelTijeraApp\StonePaperScissorsApp.csproj", "{B9A1171A-C9F0-40C2-B3A0-51C5C7B2A45D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiedraPapelTijeraApp.Tests", "tst\PiedraPapelTijeraApp.Tests\PiedraPapelTijeraApp.Tests.csproj", "{B743102A-059B-48EC-8E05-C11FA17D79BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StonePaperScissorsApp.Tests", "tst\PiedraPapelTijeraApp.Tests\StonePaperScissorsApp.Tests.csproj", "{B743102A-059B-48EC-8E05-C11FA17D79BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

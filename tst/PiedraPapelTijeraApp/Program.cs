@@ -1,60 +1,59 @@
 ﻿using pmilet.DomainEvents;
 using System;
 
-namespace PiedraPapelTijeraApp
+namespace StonePaperScissorsApp
 {
     class Program
     {
         static void Main(string[] args)
         {
             IDomainEventBus bus = new DomainEventBus();
-
-            Jugador j1 = new Jugador1(bus);
-            Jugador j2 = new Jugador2(bus);
-            Partida partida = new Partida(bus);
-            Resultados resultados = new Resultados(bus);
+            Player j1 = new Player1(bus);
+            Player j2 = new Player2(bus);
+            Match partida = new Match(bus);
+            Outcome resultados = new Outcome(bus);
 
             bool exit = false;
             while( !exit )
             {
                 Console.WriteLine("Jugador1: Piedra(1) Papel(2) o Tijera(3)");
                 var s = Console.ReadLine();
-                Jugada jugada = JugadaSeleccionada(s);
+                PlayType jugada = JugadaSeleccionada(s);
                 j1.Jugar(jugada);
-                j1.Confirmar();
+                j1.Confirm();
 
                 Console.WriteLine("Jugador2: Piedra(1) Papel(2) o Tijera(3)");
                 s = Console.ReadLine();
                 jugada = JugadaSeleccionada(s);
                 j2.Jugar(jugada);
-                j2.Confirmar();
+                j2.Confirm();
 
                 Console.WriteLine("exit? y/n");
                 var r = Console.ReadLine();
                 exit = r == "y";
             }
 
-            partida.FinalizarPartida();
-            Console.WriteLine($"Ganador {resultados.UltimoGanador()}");
+            partida.End();
+            Console.WriteLine($"Ganador {resultados.LastWinner()}");
             Console.ReadLine();
         }
 
-        private static Jugada JugadaSeleccionada(string s)
+        private static PlayType JugadaSeleccionada(string s)
         {
-            var jugada = Jugada.None;
+            var jugada = PlayType.None;
             switch (s)
             {
                 case "1":
-                    jugada = Jugada.Piedra;
+                    jugada = PlayType.Stone;
                     break;
                 case "2":
-                    jugada = Jugada.Papel;
+                    jugada = PlayType.Paper;
                     break;
                 case "3":
-                    jugada = Jugada.Tijera;
+                    jugada = PlayType.Scissors;
                     break;
                 default:
-                    jugada = Jugada.None;
+                    jugada = PlayType.None;
                     break;
             }
 
