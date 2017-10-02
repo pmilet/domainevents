@@ -1,70 +1,92 @@
 ### Domain Events
 
-Martin Fowlers defines this DDD pattern [as:](https://martinfowler.com/eaaDev/DomainEvent.html)
+Martin Fowlers defines this DDD pattern as:
 
-Domain Events captures the memory of something interesting which affects the domain.
+Domain Events [captures the memory of something interesting which affects the domain](https://martinfowler.com/eaaDev/DomainEvent.html).
 
 The essence of a Domain Event is that you use it to capture things that can trigger a change to the state of the application you are developing. These event objects are then processed to cause changes to the system.
 
-This code is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/) has been the inspiration for this library.
+This package is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/) has been the inspiration for this library.
 
 ## How to use it
 
 To create your DomainEvent class you could either inherit from the base Class DomainEvent or implement the IDomainEvent interface.
 
 ```csharp
-    public class JugadaRealizada : DomainEvent
+    /// <summary>
+    /// Represents the play choosen by a player
+    /// </summary>
+    public class PlayMade : DomainEvent
     {
-        public JugadaRealizada(JugadorType jugador, Jugada jugada)
-            : base( "JugadaRealizada", "1.0")
+        public PlayMade(PlayerType player, PlayType play)
+            : base( "PlayMade", "1.0")
         {
-            Jugador = jugador;
-            Jugada = jugada;
+            Player = player;
+            Play = play;
         }
 
-        public JugadorType Jugador { get; private set; }
-        public Jugada Jugada { get; private set; }
+        public PlayerType Player { get; private set; }
+        public PlayType Play { get; private set; }
 
     }
 ```
 
-To be able to publish events and subscribe to events our domain classes should use a DomainEventsBus instance that we can inject into their constructor: 
+To be able to publish events and subscribe to events our domain objects will use a DomainEventBus instance inject into the constructor: 
 
 ```cs
-   IDomainEventBus bus = new DomainEventBus();
-   Jugador j1 = new Jugador1(bus);
-   Jugador j2 = new Jugador2(bus);
-   Partida partida = new Partida(bus);
-   Resultados resultados = new Resultados(bus);
+  // we create the domain event bus and inject it into the objects of our domain model (normally done using a IoC container) 
+  IDomainEventBus bus = new DomainEventBus();
+  Player j1 = new Player1(bus);
+  Player j2 = new Player2(bus);
+  Match match = new Match(bus);
+  Outcome outcome = new Outcome(bus);
    ```
-  To trigger an event immediately we should use the DomainEventBus publish method informing the type :
+  To trigger an event immediately we should use the typed Publish method:
   
   ```cs
-  _bus.Publish<PartidaFinalizada>(new PartidaFinalizada(JugadorType.Jugador1));
+    //publish an event notifying that the match ended and Player1 is the winner
+    _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
  ```
- To record a delayed event we should use the add method, informing the type :
+ To record a delayed event we should use the typed Add method :
  
   ```cs
- _bus.Add<JugadaRealizada>(new JugadaRealizada( _jugador, jugada ));
- ```
-To trigger all the delayed events we should use the commit method, informing the type (only the delayed events of this type will be triggered):
-```cs
- _bus.Commit<JugadaRealizada>();
+    //delayed event to notify of the move choosen by the player
+    _bus.Add<PlayMade>(new PlayMade( _player, play ));
 ```
-To subscribe a domain class to a specific event we should inherit our class from the IHandleEvent typed interface and subscribe to the bus
+To trigger all the delayed events we should use the typed Commit method (only the delayed events of the type will be triggered):
 ```cs
- public class Resultados : IHandleDomainEvents<PartidaFinalizada>
+    //commit all registered delayed events
+    _bus.Commit<PlayMade>();
+```
+To subscribe a domain object to handle specifics events we should inherit from the IHandleEvent interface and subscribe to the bus
+(note that we could subscribe to one or more type of events by just inheriting to the IHandleEvent of the specific Type) 
+```cs
+    public class Outcome : IHandleDomainEvents<MatchEnded>
     {
-```
-      ...
-```cs
-        public Resultados(IDomainEventBus bus)
+        PlayerType _lastWinner;
+        private readonly IDomainEventBus _bus;
+        public Outcome(IDomainEventBus bus)
         {
             _bus = bus;
-            bus.Subscribe<PartidaFinalizada>(this);
+            bus.Subscribe<MatchEnded>(this);
         }
 
-```
-      ...
+        public Guid SubscriberId => throw new NotImplementedException();
+
+        public void HandleEvent(MatchEnded domainEvent)
+        {
+            _lastWinner = domainEvent.Winner;
+        }
+
+        public PlayerType LastWinner()
+        {
+            return _lastWinner;
+        }
+
+    }
+    ```
+    To see a running sample take a look to the StonePaperScissors specflow test example:
+    
+
 
 
