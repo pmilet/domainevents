@@ -6,7 +6,7 @@ Domain Events [captures the memory of something interesting which affects the do
 
 The essence of a Domain Event is that you use it to capture things that can trigger a change to the state of the application you are developing. These event objects are then processed to cause changes to the system.
 
-This code is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/) has been the inspiration for this library.
+This package is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/) has been the inspiration for this library.
 
 ## How to use it
 
