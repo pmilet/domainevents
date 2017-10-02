@@ -26,15 +26,13 @@ namespace StonePaperScissorsApp
         {
                 if( player1Score > player2Score )
                 {
+                    //publish an event notifying that the match ended and Player1 is the winner
                     _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
                 }
-                else if(player2Score > player1Score)
+                else 
                 {
+                    //publish an event notifying that the match ended and Player1 is the winner
                     _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player2));
-                }
-                else
-                {
-                    _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.None));
                 }
         }
 

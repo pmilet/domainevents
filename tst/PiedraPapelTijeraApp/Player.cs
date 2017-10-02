@@ -22,11 +22,13 @@ namespace StonePaperScissorsApp
 
         public void Jugar( PlayType play )
         {
+            //delayed event to notify of the move choosen by the player
             _bus.Add<PlayMade>(new PlayMade( _player, play ));
         }
 
         public void Confirm()
         {
+            //commit all registered delayed events
             _bus.Commit<PlayMade>();
         }
     }

@@ -7,11 +7,12 @@ namespace StonePaperScissorsApp
     {
         static void Main(string[] args)
         {
+            // we create the domain event bus and inject it into the objects of our domain model (normally done using a IoC container) 
             IDomainEventBus bus = new DomainEventBus();
             Player j1 = new Player1(bus);
             Player j2 = new Player2(bus);
-            Match partida = new Match(bus);
-            Outcome resultados = new Outcome(bus);
+            Match match = new Match(bus);
+            Outcome outcome = new Outcome(bus);
 
             bool exit = false;
             while( !exit )
@@ -33,8 +34,8 @@ namespace StonePaperScissorsApp
                 exit = r == "y";
             }
 
-            partida.End();
-            Console.WriteLine($"Ganador {resultados.LastWinner()}");
+            match.End();
+            Console.WriteLine($"Ganador {outcome.LastWinner()}");
             Console.ReadLine();
         }
 

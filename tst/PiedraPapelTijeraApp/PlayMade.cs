@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace StonePaperScissorsApp
 {
+    /// <summary>
+    /// Represents the play choosen by a player
+    /// </summary>
     public class PlayMade : DomainEvent
     {
         public PlayMade(PlayerType player, PlayType play)
