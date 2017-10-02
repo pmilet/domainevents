@@ -85,6 +85,8 @@ To subscribe a domain object to handle specifics events we should inherit from t
 
     }
     ```
+    To see a running sample take a look to the StonePaperScissors specflow test example:
+    
 
 
 
