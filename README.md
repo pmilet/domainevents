@@ -31,7 +31,7 @@ To create your DomainEvent class you could either inherit from the base Class Do
     }
 ```
 
-To be able to publish events and subscribe to events our domain classes should use a DomainEventsBus instance that we can inject into their constructor: 
+To be able to publish events and subscribe to events our domain objects will use a DomainEventBus instance inject into the constructor: 
 
 ```cs
   // we create the domain event bus and inject it into the objects of our domain model (normally done using a IoC container) 
@@ -41,24 +41,25 @@ To be able to publish events and subscribe to events our domain classes should u
   Match match = new Match(bus);
   Outcome outcome = new Outcome(bus);
    ```
-  To trigger an event immediately we should use the DomainEventBus publish method informing the type :
+  To trigger an event immediately we should use the typed Publish method:
   
   ```cs
     //publish an event notifying that the match ended and Player1 is the winner
     _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
  ```
- To record a delayed event we should use the add method, informing the type :
+ To record a delayed event we should use the typed Add method :
  
   ```cs
     //delayed event to notify of the move choosen by the player
     _bus.Add<PlayMade>(new PlayMade( _player, play ));
 ```
-To trigger all the delayed events we should use the commit method, informing the type (only the delayed events of this type will be triggered):
+To trigger all the delayed events we should use the typed Commit method (only the delayed events of the type will be triggered):
 ```cs
     //commit all registered delayed events
     _bus.Commit<PlayMade>();
 ```
-To subscribe a domain class to a specific event we should inherit from the IHandleEvent interface and subscribe to the bus
+To subscribe a domain object to handle specifics events we should inherit from the IHandleEvent interface and subscribe to the bus
+(note that we could subscribe to one or more type of events by just inheriting to the IHandleEvent of the specific Type) 
 ```cs
     public class Outcome : IHandleDomainEvents<MatchEnded>
     {
