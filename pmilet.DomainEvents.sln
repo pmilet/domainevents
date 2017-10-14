@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{251E5BBF-2F5D-4262-9E59-D54D31AAF15A}"
 	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
 		nuget.config = nuget.config
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pmilet.DomainEvents", "src\pmilet.DomainEvents\pmilet.DomainEvents.csproj", "{EABD33D6-C210-4B6E-8E6C-32E4114C75B5}"
