@@ -1,8 +1,6 @@
 ### Domain Events
 
-Martin Fowlers defines this DDD pattern as:
-
-Domain Events [captures the memory of something interesting which affects the domain](https://martinfowler.com/eaaDev/DomainEvent.html).
+Martin Fowlers defines the domainEvent DDD pattern as: Domain Events [captures the memory of something interesting which affects the domain](https://martinfowler.com/eaaDev/DomainEvent.html).
 
 The essence of a Domain Event is that you use it to capture things that can trigger a change to the state of the application you are developing. These event objects are then processed to cause changes to the system.
 
