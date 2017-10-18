@@ -57,7 +57,7 @@ namespace pmilet.DomainEvents
 
         public void Publish<T>(T domainEvent) where T : IDomainEvent
         {
-            if (!this._publishing && this.HasSubscribers())
+            if ( this.HasSubscribers())
             {
                 try
                 {

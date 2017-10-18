@@ -22,7 +22,7 @@ namespace StonePaperScissorsApp
             _bus = bus;
         }
 
-        public void Jugar( PlayType play )
+        public void Play( PlayType play )
         {
             //delayed event to notify of the move choosen by the player
             _bus.Add<PlayMade>(new PlayMade( _player, play ));

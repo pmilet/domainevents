@@ -27,14 +27,14 @@ namespace StonePaperScissorsApp.Tests
         [Given(@"player1 plays stone")]
         public void GivenPlayer1PlaysStone()
         {
-            player1.Jugar(PlayType.Stone);
+            player1.Play(PlayType.Stone);
             player1.Confirm();
         }
         
         [Given(@"player2 plays scissors")]
         public void GivenPlayer2PlaysScissors()
         {
-            player2.Jugar(PlayType.Scissors);
+            player2.Play(PlayType.Scissors);
             player2.Confirm();
         }
         

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>pmilet.DomainEvents.DomainEvents</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>pmilet DomainEvents</title>
     <authors>Pierre Milet</authors>
     <owners>Pierre Milet</owners>
@@ -11,7 +11,7 @@
     <iconUrl></iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>DomainEvents</description>
-    <releaseNotes>First release</releaseNotes>
+    <releaseNotes>fix: handler method not executed when subscribed to multiple events</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>DDD DomainEvent</tags>
     <dependencies>
