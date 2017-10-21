@@ -8,6 +8,10 @@ This package is based on an article from Jimmy Boggard [A better domain events p
 
 ## How to use it
 
+
+Install-Package pmilet.DomainEvents -Version 1.0.3
+
+
 To create your DomainEvent class you could either inherit from the base Class DomainEvent or implement the IDomainEvent interface.
 
 ```csharp
