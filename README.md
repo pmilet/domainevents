@@ -2,9 +2,9 @@
 
 Martin Fowlers defines the domainEvent DDD pattern as: Domain Events [captures the memory of something interesting which affects the domain](https://martinfowler.com/eaaDev/DomainEvent.html).
 
-The essence of a Domain Event is that you use it to capture things that can trigger a change to the state of the application you are developing. These event objects are then processed to cause changes to the system.
+The essence of a Domain Event is that you use it to capture important things that happens into the domain that can produce a change into the state of the application you are developing.
 
-This package is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/). This has been the inspiration for this library.
+This package is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/).
 
 ## How to use it
 
@@ -29,7 +29,7 @@ To create your DomainEvent class you could either inherit from the base Class Do
     }
 ```
 
-To be able to publish events and subscribe to events our domain objects will use a DomainEventBus instance inject into the constructor: 
+To be able to publish events and subscribe to events our domain objects will use a DomainEventBus instance injected into the constructor: 
 
 ```cs
   // we create the domain event bus and inject it into the objects of our domain model (normally done using a IoC container) 
@@ -39,19 +39,19 @@ To be able to publish events and subscribe to events our domain objects will use
   Match match = new Match(bus);
   Outcome outcome = new Outcome(bus);
    ```
-  To trigger an event immediately we should use the typed Publish method:
+  To trigger an event immediately we should use the Publish method:
   
   ```cs
     //publish an event notifying that the match ended and Player1 is the winner
     _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
  ```
- To record a delayed event we should use the typed Add method :
+ To record a delayed event we should use the Add method :
  
   ```cs
     //delayed event to notify of the move choosen by the player
     _bus.Add<PlayMade>(new PlayMade( _player, play ));
 ```
-To trigger all the delayed events we should use the typed Commit method (only the delayed events of the type will be triggered):
+To trigger all the delayed events we should use the Commit method (only the delayed events of the specified type will be triggered):
 ```cs
     //commit all registered delayed events
     _bus.Commit<PlayMade>();
@@ -83,7 +83,7 @@ To subscribe a domain object to handle specifics events we should inherit from t
 
     }
     ```
-    To see a running sample take a look to the StonePaperScissors specflow test example:
+    To see a running sample take a look to the StonePaperScissors specflow test example 
     
 
 
