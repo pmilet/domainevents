@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>pmilet.DomainEvents.DomainEvents</id>
-    <version>1.0.2</version>
+    <id>pmilet.DomainEvents</id>
+    <version>1.0.4</version>
     <title>pmilet DomainEvents</title>
     <authors>Pierre Milet</authors>
     <owners>Pierre Milet</owners>
-    <licenseUrl></licenseUrl>
+    <licenseUrl>https://github.com/pmilet/domainevents/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/pmilet/domainevents</projectUrl>
-    <iconUrl></iconUrl>
+    <iconUrl>https://avatars2.githubusercontent.com/u/18263595</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>DomainEvents</description>
-    <releaseNotes>fix: handler method not executed when subscribed to multiple events</releaseNotes>
+    <releaseNotes>target frameworks: netcoreapp1.1;netcoreapp2.0;netstandard2.0;net461;net452</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>DDD DomainEvent</tags>
     <dependencies>
