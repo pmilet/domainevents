@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace pmilet.DomainEvents
 {
-    public interface IDomainEventBus
+    public interface IDomainEventDispatcher
     {
         void Add<T>(T domainEvent) where T : IDomainEvent;
         void Commit<T>() where T : IDomainEvent;

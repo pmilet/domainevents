@@ -9,12 +9,12 @@ namespace StonePaperScissorsApp
     {
         static void Main(string[] args)
         {
-            // we create the domain event bus and inject it into the objects of our domain model (normally done using a IoC container) 
-            IDomainEventBus bus = new DomainEventBus();
-            Player j1 = new Player1(bus);
-            Player j2 = new Player2(bus);
-            Match match = new Match(bus);
-            Outcome outcome = new Outcome(bus);
+            // we create the domain event dispatcher and inject it into the objects of our domain model (normally done using a IoC container) 
+            IDomainEventDispatcher dispatcher = new DomainEventDispatcher();
+            Player j1 = new Player1(dispatcher);
+            Player j2 = new Player2(dispatcher);
+            Match match = new Match(dispatcher);
+            Outcome outcome = new Outcome(dispatcher);
 
             bool exit = false;
             while( !exit )

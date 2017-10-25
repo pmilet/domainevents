@@ -10,18 +10,18 @@ namespace StonePaperScissorsApp.Tests
     [Binding]
     public class ReglasStonePaperScissorsSteps
     {
-        private readonly IDomainEventBus bus;
+        private readonly IDomainEventDispatcher dispatcher;
         private readonly Match match;
         private readonly Player1 player1;
         private readonly Player2 player2;
         private readonly Outcome outcome;
         public ReglasStonePaperScissorsSteps()
         {
-            bus = new DomainEventBus();
-            match = new Match(bus);
-            player1 = new Player1(bus);
-            player2 = new Player2(bus);
-            outcome = new Outcome(bus);
+            dispatcher = new DomainEventDispatcher();
+            match = new Match(dispatcher);
+            player1 = new Player1(dispatcher);
+            player2 = new Player2(dispatcher);
+            outcome = new Outcome(dispatcher);
         }
 
         [Given(@"player1 plays stone")]

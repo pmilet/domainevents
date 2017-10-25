@@ -16,11 +16,11 @@ namespace StonePaperScissorsApp
         public PlayType player1LastScore= PlayType.None;
         public PlayType player2LastScore = PlayType.None;
 
-        IDomainEventBus _bus;
-        public Match( IDomainEventBus bus)
+        IDomainEventDispatcher _bus;
+        public Match( IDomainEventDispatcher dispatcher)
         {
-            _bus = bus;
-            bus.Subscribe<PlayMade>(this);
+            _bus = dispatcher;
+            dispatcher.Subscribe<PlayMade>(this);
 
         }
 

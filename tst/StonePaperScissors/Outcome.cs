@@ -12,11 +12,11 @@ namespace StonePaperScissorsApp
     public class Outcome : IHandleDomainEvents<MatchEnded>
     {
         PlayerType _lastWinner;
-        private readonly IDomainEventBus _bus;
-        public Outcome(IDomainEventBus bus)
+        private readonly IDomainEventDispatcher _bus;
+        public Outcome(IDomainEventDispatcher dispatcher)
         {
-            _bus = bus;
-            bus.Subscribe<MatchEnded>(this);
+            _bus = dispatcher;
+            dispatcher.Subscribe<MatchEnded>(this);
         }
 
         public Guid SubscriberId => throw new NotImplementedException();

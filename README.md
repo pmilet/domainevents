@@ -33,15 +33,15 @@ To create your DomainEvent class you could either inherit from the base Class Do
     }
 ```
 
-To be able to publish events and subscribe to events our domain objects will use a DomainEventBus instance injected into the constructor: 
+To be able to publish events and subscribe to events our domain objects will use a DomainEventDispatcher instance injected into the constructor: 
 
 ```cs
-  // we create the domain event bus and inject it into the objects of our domain model (normally done using a IoC container) 
-  IDomainEventBus bus = new DomainEventBus();
-  Player j1 = new Player1(bus);
-  Player j2 = new Player2(bus);
-  Match match = new Match(bus);
-  Outcome outcome = new Outcome(bus);
+  // we create the domain event dispatcher and inject it into the objects of our domain model (normally done using a IoC container) 
+  IDomainEventDispatcher dispatcher = new DomainEventDispatcher();
+  Player j1 = new Player1(dispatcher);
+  Player j2 = new Player2(dispatcher);
+  Match match = new Match(dispatcher);
+  Outcome outcome = new Outcome(dispatcher);
    ```
   To trigger an event immediately we should use the Publish method:
   
@@ -60,17 +60,17 @@ To trigger all the delayed events we should use the Commit method (only the dela
     //commit all registered delayed events
     _bus.Commit<PlayMade>();
 ```
-To subscribe a domain object to handle specifics events we should inherit from the IHandleEvent interface and subscribe to the bus
+To subscribe a domain object to handle specifics events we should inherit from the IHandleEvent interface and subscribe to the dispatcher
 (note that we could subscribe to one or more type of events by just inheriting to the IHandleEvent of the specific Type) 
 ```cs
     public class Outcome : IHandleDomainEvents<MatchEnded>
     {
         PlayerType _lastWinner;
-        private readonly IDomainEventBus _bus;
-        public Outcome(IDomainEventBus bus)
+        private readonly IDomainEventDispatcher _bus;
+        public Outcome(IDomainEventDispatcher dispatcher)
         {
-            _bus = bus;
-            bus.Subscribe<MatchEnded>(this);
+            _bus = dispatcher;
+            dispatcher.Subscribe<MatchEnded>(this);
         }
 
         public Guid SubscriberId => throw new NotImplementedException();

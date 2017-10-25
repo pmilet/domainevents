@@ -8,13 +8,13 @@ using System.Threading;
 
 namespace pmilet.DomainEvents
 {
-    public class DomainEventBus : IDomainEventBus
+    public class DomainEventDispatcher : IDomainEventDispatcher
     {
         private ConcurrentBag<IDomainEvent> _events = new ConcurrentBag<IDomainEvent>();
         private ConcurrentDictionary<Type,object> _subscribers;
         private bool _publishing;
 
-        public DomainEventBus()
+        public DomainEventDispatcher()
         {
             this._publishing = false;
         }

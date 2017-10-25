@@ -14,12 +14,12 @@ namespace StonePaperScissorsApp
 
     public abstract class Player 
     {
-        IDomainEventBus _bus;
+        IDomainEventDispatcher _bus;
         PlayerType _player;
-        public Player(PlayerType player, IDomainEventBus bus)
+        public Player(PlayerType player, IDomainEventDispatcher dispatcher)
         {
             _player = player;
-            _bus = bus;
+            _bus = dispatcher;
         }
 
         public void Play( PlayType play )
@@ -37,13 +37,13 @@ namespace StonePaperScissorsApp
 
     public class Player1 : Player
     {
-        public Player1(IDomainEventBus bus) : base(PlayerType.Player1, bus)
+        public Player1(IDomainEventDispatcher dispatcher) : base(PlayerType.Player1, dispatcher)
         { }
     }
 
     public class Player2 : Player
     {
-        public Player2(IDomainEventBus bus) : base(PlayerType.Player2, bus)
+        public Player2(IDomainEventDispatcher dispatcher) : base(PlayerType.Player2, dispatcher)
         { }
     }
 }
