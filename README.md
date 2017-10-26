@@ -41,7 +41,7 @@ From your business logic you can publish events or subscribe to events by means 
   Match match = new Match(dispatcher);
   Outcome outcome = new Outcome(dispatcher);
    ```
-  Note: Normally you will register the DomainEventDispatcher instance in your IoC container. 
+  Note: a better option is to register the DomainEventDispatcher instance in your IoC container. 
   
 ### 3. Trigger domain events from your business logic 
   
