@@ -1,7 +1,8 @@
-### Domain Events
+### Purpose
 The purppose of this library is to simplify the development of applications using Domain Events.
 This library is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/).
 
+### Domain Events
 Martin Fowlers defines the domainEvent DDD pattern as: Domain Events [captures the memory of something interesting which affects the domain](https://martinfowler.com/eaaDev/DomainEvent.html).
 The essence of a Domain Event is that you use it to capture important things that happens into the domain and that can produce a change into the state of the application you are developing.
 
