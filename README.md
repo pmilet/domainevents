@@ -1,4 +1,4 @@
-### Purpose
+#### Purpose
 The purppose of this library is to simplify the development of applications that use the Domain Event design pattern.
 This library is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/).
 
@@ -7,7 +7,7 @@ Martin Fowlers defines the domainEvent DDD pattern as: Domain Events [captures t
 The essence of a Domain Event is that you use it to capture important things that happens into the domain and that can produce a change into the state of the application you are developing.
 Another good source of information is this [chapter](https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/domain-events-design-implementation) about Domain Events from the Microsoft [ebook](https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/): .NET Microservices. Architecture for Containerized .NET Applications
 
-## 1. Model your domain event
+### 1. Model your domain event
 
 To create your DomainEvent class you could either inherit from the base Class DomainEvent or implement the IDomainEvent interface.
 
@@ -29,9 +29,9 @@ To create your DomainEvent class you could either inherit from the base Class Do
 
     }
 ```
-## 2. Create an instance of the DomainEventDispatcher
+### 2. Create an instance of the DomainEventDispatcher
 
-From your business logic you will publish events or subscribe to events by using a DomainEventDispatcher instance. 
+From your business logic you can publish events or subscribe to events by means of a DomainEventDispatcher instance. 
 
 ```cs
   // we create the domain event dispatcher and inject it into the objects of our domain model (normally done using a IoC container) 
@@ -43,7 +43,7 @@ From your business logic you will publish events or subscribe to events by using
    ```
   Note: Normally you will register the DomainEventDispatcher instance in your IoC container. 
   
-  ## 3. Trigger domain events from your business logic 
+### 3. Trigger domain events from your business logic 
   
   To trigger an event immediately we should use the Publish method:
   
@@ -63,7 +63,7 @@ To trigger all the delayed events we should use the Commit method (only the dela
     _bus.Commit<PlayMade>();
 ```
 
-## 4. Respond to specific domain events from your business logic by subscribing to them  
+### 4. Respond to specific domain events from your business logic by subscribing to them  
 
 To subscribe to specific type of domain events we should inherit from the IHandleDomainEvents<T> interface and subscribe to the dispatcher instance (normally in the constructor).
 
@@ -93,7 +93,7 @@ To subscribe to specific type of domain events we should inherit from the IHandl
     }
     ```
 
-## See a sample app that uses domain events 
+### See a example app that uses domain events 
     
     To see a running sample take a look to the StonePaperScissors app or specflow functional tests from the [github](https://github.com/pmilet/domainevents) repo 
     
