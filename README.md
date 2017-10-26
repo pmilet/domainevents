@@ -45,27 +45,27 @@ From your business logic you can publish events or subscribe to events by means 
   
 ### 3. Trigger domain events from your business logic 
   
-  To trigger an event immediately we should use the Publish method:
+  To trigger an domain event immediately we should use the DomainEventDipatcher Publish<T> method:
   
   ```cs
     //publish an event notifying that the match ended and Player1 is the winner
-    _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
+    _dispatcher.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
  ```
- To add a delayed event we should use the Add method :
+ To add a delayed domain event we should use the Add<T> method :
  
   ```cs
     //delayed event to notify of the move choosen by the player
-    _bus.Add<PlayMade>(new PlayMade( _player, play ));
+    _dispatcher.Add<PlayMade>(new PlayMade( _player, play ));
 ```
-To trigger all the delayed events we should use the Commit method (only the delayed events of the specified type will be triggered):
+To trigger all the delayed domain events of a specific type we should use the Commit<T> method :
 ```cs
     //commit all registered delayed events
-    _bus.Commit<PlayMade>();
+    _dispatcher.Commit<PlayMade>();
 ```
 
 ### 4. Respond to specific domain events from your business logic by subscribing to them  
 
-To subscribe to specific type of domain events we should inherit from the IHandleDomainEvents<T> interface and subscribe to the dispatcher instance (normally in the constructor).
+To subscribe to specific domain events we should inherit from the IHandleDomainEvents<T> interface and subscribe to the dispatcher instance (normally in the constructor).
 
 ```cs
     public class Outcome : IHandleDomainEvents<MatchEnded>
