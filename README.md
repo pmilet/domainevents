@@ -1,16 +1,13 @@
 ### Domain Events
+The purppose of this library is to simplify the development of applications using Domain Events.
+This library is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/).
 
 Martin Fowlers defines the domainEvent DDD pattern as: Domain Events [captures the memory of something interesting which affects the domain](https://martinfowler.com/eaaDev/DomainEvent.html).
+The essence of a Domain Event is that you use it to capture important things that happens into the domain and that can produce a change into the state of the application you are developing.
 
-The essence of a Domain Event is that you use it to capture important things that happens into the domain that can produce a change into the state of the application you are developing.
+Another good source of information about Domain Events is this [chapter](https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/domain-events-design-implementation) from the Microsoft [ebook](https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/): .NET Microservices. Architecture for Containerized .NET Applications
 
-This package is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/).
-
-## How to use it
-
-
-Install-Package pmilet.DomainEvents -Version 1.0.3
-
+## 1. Model your domain event
 
 To create your DomainEvent class you could either inherit from the base Class DomainEvent or implement the IDomainEvent interface.
 
@@ -32,8 +29,9 @@ To create your DomainEvent class you could either inherit from the base Class Do
 
     }
 ```
+## 2. Create an instance of the DomainEventDispatcher
 
-To be able to publish events and subscribe to events our domain objects will use a DomainEventDispatcher instance injected into the constructor: 
+From your business logic you will publish events or subscribe to events by using a DomainEventDispatcher instance. 
 
 ```cs
   // we create the domain event dispatcher and inject it into the objects of our domain model (normally done using a IoC container) 
@@ -43,13 +41,17 @@ To be able to publish events and subscribe to events our domain objects will use
   Match match = new Match(dispatcher);
   Outcome outcome = new Outcome(dispatcher);
    ```
+  Note: Normally you will register the DomainEventDispatcher instance in your IoC container. 
+  
+  ## 3. Trigger domain events from your business logic 
+  
   To trigger an event immediately we should use the Publish method:
   
   ```cs
     //publish an event notifying that the match ended and Player1 is the winner
     _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
  ```
- To record a delayed event we should use the Add method :
+ To add a delayed event we should use the Add method :
  
   ```cs
     //delayed event to notify of the move choosen by the player
@@ -60,8 +62,11 @@ To trigger all the delayed events we should use the Commit method (only the dela
     //commit all registered delayed events
     _bus.Commit<PlayMade>();
 ```
-To subscribe a domain object to handle specifics events we should inherit from the IHandleEvent interface and subscribe to the dispatcher
-(note that we could subscribe to one or more type of events by just inheriting to the IHandleEvent of the specific Type) 
+
+## 4. Respond to specific domain events from your business logic by subscribing to them  
+
+To subscribe to specific type of domain events we should inherit from the IHandleDomainEvents<T> interface and subscribe to the dispatcher instance (normally in the constructor).
+
 ```cs
     public class Outcome : IHandleDomainEvents<MatchEnded>
     {
@@ -87,7 +92,10 @@ To subscribe a domain object to handle specifics events we should inherit from t
 
     }
     ```
-    To see a running sample take a look to the StonePaperScissors specflow test example 
+
+## See a sample app that uses domain events 
+    
+    To see a running sample take a look to the StonePaperScissors app or specflow functional tests from the [github](https://github.com/pmilet/domainevents) repo 
     
 
 
