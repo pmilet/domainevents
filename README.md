@@ -1,5 +1,5 @@
 ### Purpose
-The purppose of this library is to simplify the development of applications using Domain Events.
+The purppose of this library is to simplify the development of applications that use the Domain Event design pattern.
 This library is based on an article from Jimmy Boggard [A better domain events pattern.](https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/).
 
 ### Domain Events
