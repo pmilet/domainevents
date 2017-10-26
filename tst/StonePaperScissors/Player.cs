@@ -14,24 +14,24 @@ namespace StonePaperScissorsApp
 
     public abstract class Player 
     {
-        IDomainEventDispatcher _bus;
+        IDomainEventDispatcher _dispatcher;
         PlayerType _player;
         public Player(PlayerType player, IDomainEventDispatcher dispatcher)
         {
             _player = player;
-            _bus = dispatcher;
+            _dispatcher = dispatcher;
         }
 
         public void Play( PlayType play )
         {
             //delayed event to notify of the move choosen by the player
-            _bus.Add<PlayMade>(new PlayMade( _player, play ));
+            _dispatcher.Add<PlayMade>(new PlayMade( _player, play ));
         }
 
         public void Confirm()
         {
             //commit all registered delayed events
-            _bus.Commit<PlayMade>();
+            _dispatcher.Commit<PlayMade>();
         }
     }
 

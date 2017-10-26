@@ -47,18 +47,18 @@ To be able to publish events and subscribe to events our domain objects will use
   
   ```cs
     //publish an event notifying that the match ended and Player1 is the winner
-    _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
+    _dispatcher.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
  ```
  To record a delayed event we should use the Add method :
  
   ```cs
     //delayed event to notify of the move choosen by the player
-    _bus.Add<PlayMade>(new PlayMade( _player, play ));
+    _dispatcher.Add<PlayMade>(new PlayMade( _player, play ));
 ```
 To trigger all the delayed events we should use the Commit method (only the delayed events of the specified type will be triggered):
 ```cs
     //commit all registered delayed events
-    _bus.Commit<PlayMade>();
+    _dispatcher.Commit<PlayMade>();
 ```
 To subscribe a domain object to handle specifics events we should inherit from the IHandleEvent interface and subscribe to the dispatcher
 (note that we could subscribe to one or more type of events by just inheriting to the IHandleEvent of the specific Type) 
@@ -66,10 +66,10 @@ To subscribe a domain object to handle specifics events we should inherit from t
     public class Outcome : IHandleDomainEvents<MatchEnded>
     {
         PlayerType _lastWinner;
-        private readonly IDomainEventDispatcher _bus;
+        private readonly IDomainEventDispatcher _dispatcher;
         public Outcome(IDomainEventDispatcher dispatcher)
         {
-            _bus = dispatcher;
+            _dispatcher = dispatcher;
             dispatcher.Subscribe<MatchEnded>(this);
         }
 

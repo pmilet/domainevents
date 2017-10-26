@@ -16,10 +16,10 @@ namespace StonePaperScissorsApp
         public PlayType player1LastScore= PlayType.None;
         public PlayType player2LastScore = PlayType.None;
 
-        IDomainEventDispatcher _bus;
+        IDomainEventDispatcher _dispatcher;
         public Match( IDomainEventDispatcher dispatcher)
         {
-            _bus = dispatcher;
+            _dispatcher = dispatcher;
             dispatcher.Subscribe<PlayMade>(this);
 
         }
@@ -29,12 +29,12 @@ namespace StonePaperScissorsApp
                 if( player1Score > player2Score )
                 {
                     //publish an event notifying that the match ended and Player1 is the winner
-                    _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
+                    _dispatcher.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
                 }
                 else 
                 {
                     //publish an event notifying that the match ended and Player1 is the winner
-                    _bus.Publish<MatchEnded>(new MatchEnded(PlayerType.Player2));
+                    _dispatcher.Publish<MatchEnded>(new MatchEnded(PlayerType.Player2));
                 }
         }
 

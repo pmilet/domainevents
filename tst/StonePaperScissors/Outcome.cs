@@ -12,10 +12,10 @@ namespace StonePaperScissorsApp
     public class Outcome : IHandleDomainEvents<MatchEnded>
     {
         PlayerType _lastWinner;
-        private readonly IDomainEventDispatcher _bus;
+        private readonly IDomainEventDispatcher _dispatcher;
         public Outcome(IDomainEventDispatcher dispatcher)
         {
-            _bus = dispatcher;
+            _dispatcher = dispatcher;
             dispatcher.Subscribe<MatchEnded>(this);
         }
 
