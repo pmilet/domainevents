@@ -17,8 +17,6 @@ namespace StonePaperScissorsApp
         {
         }
 
-        public Guid SubscriberId => throw new NotImplementedException();
-
         public override void HandleEvent(MatchEnded domainEvent)
         {
             _lastWinner = domainEvent.Winner;
