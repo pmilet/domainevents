@@ -68,23 +68,17 @@ To trigger all the delayed domain events of a specific type we should use the Co
 To subscribe to specific domain events we should inherit from the IHandleDomainEvents<T> interface and subscribe to the dispatcher instance (normally in the constructor).
 
 ```cs
-    public class Outcome : IHandleDomainEvents<MatchEnded>
+    public class Outcome : HandleDomainEventsBase<MatchEnded>
     {
         PlayerType _lastWinner;
-        private readonly IDomainEventDispatcher _dispatcher;
-        public Outcome(IDomainEventDispatcher dispatcher)
-        {
-            _dispatcher = dispatcher;
-            dispatcher.Subscribe<MatchEnded>(this);
-        }
+        public Outcome(IDomainEventDispatcher dispatcher):base(dispatcher)
+        {}
 
-        public Guid SubscriberId => throw new NotImplementedException();
-
-        public void HandleEvent(MatchEnded domainEvent)
+        public override void HandleEvent(MatchEnded domainEvent)
         {
             _lastWinner = domainEvent.Winner;
         }
-
+        
         public PlayerType LastWinner()
         {
             return _lastWinner;
