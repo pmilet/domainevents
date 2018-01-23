@@ -57,31 +57,32 @@ namespace pmilet.DomainEvents
 
         public void Publish<T>(T domainEvent) where T : IDomainEvent
         {
-            if ( this.HasSubscribers())
+            if ( this.HasSubscribers() && domainEvent != null)
             {
                 try
                 {
                     this._publishing = true;
+                    Type domainEventType = domainEvent.GetType();
 
-                    foreach (var subscriber in this.Subscribers.Where( s=> s.Key == typeof(T) || s.Key == typeof(IDomainEvent)).Select(c=> c.Value))
+                    var suscribersToThisEvent = this.Subscribers.Where(s => domainEventType == s.Key || domainEventType.IsSubclassOf(s.Key));
+                    foreach (var subscriber in suscribersToThisEvent)
                     {
-                        if (subscriber is IHandleDomainEvents<T>)
-                        {
-                            IHandleDomainEvents<T> subscriberOfT = subscriber as IHandleDomainEvents<T>;
-                            subscriberOfT.HandleEvent(domainEvent);
-                        }
-                        else
-                        {
-                            IHandleDomainEvents<IDomainEvent> subscriberOfT = subscriber as IHandleDomainEvents<IDomainEvent>;
-                            subscriberOfT.HandleEvent(domainEvent);
-                        }
+                        if (subscriber.Value is IHandleDomainEventsBase subscriberOfT)
+                            subscriberOfT.HandleDomainEvent(domainEvent);
                     }
                 }
                 finally
                 {
+                    DomainEventSource.Current.Log(domainEvent);
                     this._publishing = false;
                 }
             }
+        }
+
+        
+        private bool IsDomainEvent(Type domainEventType)
+        {
+            return typeof(DomainEvent).IsSubclassOf(domainEventType);
         }
 
         public void Reset()

@@ -9,19 +9,15 @@ using System.Threading.Tasks;
 
 namespace StonePaperScissorsApp
 {
-    public class Match : IHandleDomainEvents<PlayMade>
+    public class Match : HandleDomainEventsBase<PlayMade>
     {
         public int player1Score = 0;
         public int player2Score = 0;
         public PlayType player1LastScore= PlayType.None;
         public PlayType player2LastScore = PlayType.None;
 
-        IDomainEventDispatcher _dispatcher;
-        public Match( IDomainEventDispatcher dispatcher)
+        public Match( IDomainEventDispatcher dispatcher):base( dispatcher)
         {
-            _dispatcher = dispatcher;
-            dispatcher.Subscribe<PlayMade>(this);
-
         }
 
         public void End()
@@ -29,22 +25,13 @@ namespace StonePaperScissorsApp
                 if( player1Score > player2Score )
                 {
                     //publish an event notifying that the match ended and Player1 is the winner
-                    _dispatcher.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
+                    domainEventDispatcher.Publish<MatchEnded>(new MatchEnded(PlayerType.Player1));
                 }
                 else 
                 {
                     //publish an event notifying that the match ended and Player1 is the winner
-                    _dispatcher.Publish<MatchEnded>(new MatchEnded(PlayerType.Player2));
+                    domainEventDispatcher.Publish<MatchEnded>(new MatchEnded(PlayerType.Player2));
                 }
-        }
-
-        public Guid SubscriberId => Guid.NewGuid();
-
-        public void HandleEvent(PlayMade domainEvent)
-        {
-            SavePlay(domainEvent);
-
-            EvalOutcome();
         }
     
         private void EvalOutcome()
@@ -96,6 +83,11 @@ namespace StonePaperScissorsApp
             }
         }
 
-        
+        public override void HandleEvent(PlayMade domainEvent)
+        {
+            SavePlay(domainEvent);
+
+            EvalOutcome();
+        }
     }
 }

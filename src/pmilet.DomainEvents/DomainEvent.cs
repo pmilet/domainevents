@@ -15,17 +15,17 @@ namespace pmilet.DomainEvents
 
         public string AggregateSource
         {
-            get; private set;
+            get; set;
         }
 
         public DateTime CreatedOn
         {
-            get; private set;
+            get; set;
         }
 
         public string Version
         {
-            get; private set;
+            get; set;
         }
     }
 }

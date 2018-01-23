@@ -6,8 +6,8 @@ namespace pmilet.DomainEvents
 {
     public interface IDomainEvent
     {
-        string AggregateSource { get; }
-        DateTime CreatedOn { get; }
-        string Version { get; }
+        string AggregateSource { get; set; }
+        DateTime CreatedOn { get; set; }
+        string Version { get; set; }
     }
 }

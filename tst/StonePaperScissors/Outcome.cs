@@ -9,19 +9,17 @@ using System.Threading.Tasks;
 
 namespace StonePaperScissorsApp
 {
-    public class Outcome : IHandleDomainEvents<MatchEnded>
+    public class Outcome : HandleDomainEventsBase<MatchEnded>
     {
         PlayerType _lastWinner;
-        private readonly IDomainEventDispatcher _dispatcher;
         public Outcome(IDomainEventDispatcher dispatcher)
+            :base(dispatcher)
         {
-            _dispatcher = dispatcher;
-            dispatcher.Subscribe<MatchEnded>(this);
         }
 
         public Guid SubscriberId => throw new NotImplementedException();
 
-        public void HandleEvent(MatchEnded domainEvent)
+        public override void HandleEvent(MatchEnded domainEvent)
         {
             _lastWinner = domainEvent.Winner;
         }
