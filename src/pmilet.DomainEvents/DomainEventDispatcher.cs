@@ -38,11 +38,13 @@ namespace pmilet.DomainEvents
 
         public void Add<T>(T domainEvent) where T : IDomainEvent
         {
+            DomainEventSource.Current.LogInformation($"add {domainEvent.AggregateSource}");
             _events.Add(domainEvent);
         }
 
         public void Commit<T>() where T : IDomainEvent
         {
+            DomainEventSource.Current.LogInformation($"commit {typeof(T).ToString()} domain events");
             foreach (IDomainEvent domainEvent in _events)
             {
                 if (domainEvent.GetType() == typeof(T))
@@ -57,6 +59,7 @@ namespace pmilet.DomainEvents
 
         public void Publish<T>(T domainEvent) where T : IDomainEvent
         {
+            DomainEventSource.Current.Log(domainEvent);
             if ( this.HasSubscribers() && domainEvent != null)
             {
                 try
@@ -73,7 +76,6 @@ namespace pmilet.DomainEvents
                 }
                 finally
                 {
-                    DomainEventSource.Current.Log(domainEvent);
                     this._publishing = false;
                 }
             }
@@ -95,6 +97,7 @@ namespace pmilet.DomainEvents
 
         public void Subscribe<T>(IHandleDomainEvents<T> subscriber) where T : IDomainEvent
         {
+            DomainEventSource.Current.LogInformation($"subscribe to {typeof(T).ToString()}");
             if (!this._publishing && !Registered<T>(subscriber))
             {
                 this.Subscribers.GetOrAdd(typeof(T), subscriber as IHandleDomainEvents<T>);

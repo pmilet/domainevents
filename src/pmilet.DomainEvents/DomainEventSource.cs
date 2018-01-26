@@ -29,19 +29,36 @@ namespace pmilet.DomainEvents
             if (this.IsEnabled())
             {
                 string payload = JsonConvert.SerializeObject(domainEvent);
-                Log( domainEvent.AggregateSource, domainEvent.Version, payload );
+                LogEvent( domainEvent.AggregateSource, domainEvent.Version, payload );
             }
         }
 
-        private const int DomainEventId = 1;
-        [Event(DomainEventId, Level = EventLevel.Informational, Message = "{0}")]
-        public void Log(string source, string version, string payload )
+
+        [Event(1, Level = EventLevel.Informational, Message = "{0}")]
+        public void LogEvent(string source, string version, string payload )
         {
             if (this.IsEnabled())
             {
-                WriteEvent(DomainEventId, source, version, payload );
+                WriteEvent(1, source, version, payload );
             }
         }
 
+        [NonEvent]
+        public void Log(string message)
+        {
+            if (this.IsEnabled())
+            {
+                LogInformation(message);
+            }
+        }
+
+        [Event(2, Level = EventLevel.Informational, Message = "{0}")]
+        public void LogInformation(string message)
+        {
+            if (this.IsEnabled())
+            {
+                WriteEvent(2, message);
+            }
+        }
     }
 }
