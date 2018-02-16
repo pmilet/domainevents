@@ -26,6 +26,8 @@ namespace StonePaperScissorsApp
         {
             //delayed event to notify of the move choosen by the player
             _dispatcher.Add<PlayMade>(new PlayMade( _player, play ));
+            if( play == PlayType.None)
+                _dispatcher.Publish<InvalidPlay>(new InvalidPlay(_player, play));
         }
 
         public void Confirm()

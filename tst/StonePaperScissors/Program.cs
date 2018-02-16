@@ -19,18 +19,22 @@ namespace StonePaperScissorsApp
             bool exit = false;
             while( !exit )
             {
-                Console.WriteLine("Jugador1: Piedra(1) Papel(2) o Tijera(3)");
-                var s = Console.ReadLine();
-                PlayType jugada = JugadaSeleccionada(s);
-                j1.Play(jugada);
-                j1.Confirm();
-
-                Console.WriteLine("Jugador2: Piedra(1) Papel(2) o Tijera(3)");
-                s = Console.ReadLine();
-                jugada = JugadaSeleccionada(s);
-                j2.Play(jugada);
-                j2.Confirm();
-
+                PlayType jugada = PlayType.None;
+                do
+                {
+                    Console.WriteLine("Jugador1: Piedra(1) Papel(2) o Tijera(3)");
+                    var s = Console.ReadLine();
+                    jugada = JugadaSeleccionada(s);
+                    j1.Play(jugada);
+                    j1.Confirm();
+                } while (jugada == PlayType.None);
+                do {
+                    Console.WriteLine("Jugador2: Piedra(1) Papel(2) o Tijera(3)");
+                    var s = Console.ReadLine();
+                    jugada = JugadaSeleccionada(s);
+                    j2.Play(jugada);
+                    j2.Confirm();
+                } while (jugada == PlayType.None);
                 Console.WriteLine("exit? y/n");
                 var r = Console.ReadLine();
                 exit = r == "y";

@@ -9,15 +9,19 @@ using System.Threading.Tasks;
 
 namespace StonePaperScissorsApp
 {
-    public class Match : HandleDomainEventsBase<PlayMade>
+    public class Match : HandleDomainEventsBase<PlayMade>, 
+        IHandleDomainEvents<InvalidPlay>
     {
         public int player1Score = 0;
         public int player2Score = 0;
         public PlayType player1LastScore= PlayType.None;
         public PlayType player2LastScore = PlayType.None;
+        readonly IDomainEventDispatcher domainEventDispatcher;
 
         public Match( IDomainEventDispatcher dispatcher):base( dispatcher)
         {
+            domainEventDispatcher = dispatcher;
+            dispatcher.Subscribe<InvalidPlay>(this);
         }
 
         public void End()
@@ -88,6 +92,11 @@ namespace StonePaperScissorsApp
             SavePlay(domainEvent);
 
             EvalOutcome();
+        }
+
+        public void HandleEvent(InvalidPlay domainEvent)
+        {
+            Console.WriteLine($"invalid play {domainEvent.Play.ToString()} made by {domainEvent.Player.ToString()}");
         }
     }
 }

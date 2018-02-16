@@ -46,6 +46,7 @@
     <Compile Include="MatchEnded.cs" />
     <Compile Include="Outcome.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="InvalidPlay.cs" />
     <Compile Include="PlayMade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

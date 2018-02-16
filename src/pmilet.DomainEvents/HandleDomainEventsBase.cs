@@ -11,11 +11,10 @@ namespace pmilet.DomainEvents
         IHandleDomainEventsBase where T : IDomainEvent
     {
         public Guid SubscriberId => Guid.NewGuid();
-        protected IDomainEventDispatcher domainEventDispatcher;
+
         public HandleDomainEventsBase(IDomainEventDispatcher domainEventDispatcher)
         {
-            this.domainEventDispatcher = domainEventDispatcher;
-            this.domainEventDispatcher.Subscribe<T>(this);
+            domainEventDispatcher.Subscribe<T>(this);
         }
 
         public void HandleDomainEvent(IDomainEvent domainEvent)

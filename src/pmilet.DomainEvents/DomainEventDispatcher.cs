@@ -11,7 +11,7 @@ namespace pmilet.DomainEvents
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
         private ConcurrentBag<IDomainEvent> _events = new ConcurrentBag<IDomainEvent>();
-        private ConcurrentDictionary<Type,object> _subscribers;
+        private ConcurrentDictionary<Type, object> _subscribers;
         private bool _publishing;
 
         public DomainEventDispatcher()
@@ -19,13 +19,13 @@ namespace pmilet.DomainEvents
             this._publishing = false;
         }
 
-        private ConcurrentDictionary<Type,object> Subscribers
+        private ConcurrentDictionary<Type, object> Subscribers
         {
             get
             {
                 if (this._subscribers == null)
                 {
-                    this._subscribers = new ConcurrentDictionary<Type,object>();
+                    this._subscribers = new ConcurrentDictionary<Type, object>();
                 }
 
                 return this._subscribers;
@@ -38,13 +38,11 @@ namespace pmilet.DomainEvents
 
         public void Add<T>(T domainEvent) where T : IDomainEvent
         {
-            DomainEventSource.Current.LogInformation($"add {domainEvent.AggregateSource}");
             _events.Add(domainEvent);
         }
 
         public void Commit<T>() where T : IDomainEvent
         {
-            DomainEventSource.Current.LogInformation($"commit {typeof(T).ToString()} domain events");
             foreach (IDomainEvent domainEvent in _events)
             {
                 if (domainEvent.GetType() == typeof(T))
@@ -59,8 +57,7 @@ namespace pmilet.DomainEvents
 
         public void Publish<T>(T domainEvent) where T : IDomainEvent
         {
-            DomainEventSource.Current.Log(domainEvent);
-            if ( this.HasSubscribers() && domainEvent != null)
+            if (this.HasSubscribers() && domainEvent != null)
             {
                 try
                 {
@@ -70,18 +67,21 @@ namespace pmilet.DomainEvents
                     var suscribersToThisEvent = this.Subscribers.Where(s => domainEventType == s.Key || domainEventType.IsSubclassOf(s.Key));
                     foreach (var subscriber in suscribersToThisEvent)
                     {
-                        if (subscriber.Value is IHandleDomainEventsBase subscriberOfT)
-                            subscriberOfT.HandleDomainEvent(domainEvent);
+                        if (subscriber.Value is HandleDomainEventsBase<T> subscriberOfBase)
+                            subscriberOfBase.HandleDomainEvent(domainEvent);
+                        if (subscriber.Value is IHandleDomainEvents<T> subscriberOfT)
+                            subscriberOfT.HandleEvent(domainEvent);
                     }
                 }
                 finally
                 {
+                    DomainEventSource.Current.Log(domainEvent);
                     this._publishing = false;
                 }
             }
         }
 
-        
+
         private bool IsDomainEvent(Type domainEventType)
         {
             return typeof(DomainEvent).IsSubclassOf(domainEventType);
@@ -97,7 +97,6 @@ namespace pmilet.DomainEvents
 
         public void Subscribe<T>(IHandleDomainEvents<T> subscriber) where T : IDomainEvent
         {
-            DomainEventSource.Current.LogInformation($"subscribe to {typeof(T).ToString()}");
             if (!this._publishing && !Registered<T>(subscriber))
             {
                 this.Subscribers.GetOrAdd(typeof(T), subscriber as IHandleDomainEvents<T>);
@@ -106,7 +105,7 @@ namespace pmilet.DomainEvents
 
         private bool Registered<T>(IHandleDomainEvents<T> subscriber)
         {
-            return this.Subscribers.Where(s => s.Key == typeof(T) ).Any();
+            return this.Subscribers.Where(s => s.Key == typeof(T)).Any();
         }
 
         bool HasSubscribers()
