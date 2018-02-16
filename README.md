@@ -65,7 +65,8 @@ To trigger all the delayed domain events of a specific type we should use the Co
 
 ### 4. Respond to specific domain events from your business logic by subscribing to them  
 
-To subscribe to specific domain events we should inherit from the IHandleDomainEvents<T> interface and subscribe to the dispatcher instance (normally in the constructor).
+The easiest way to subscribe to a specific domain event is by inheriting from the HandleDomainEventsBase<T> class.
+This way the subscription is done automatically, you just have to override the HandleEvent method as shown:
 
 ```cs
     public class Outcome : HandleDomainEventsBase<MatchEnded>
@@ -86,10 +87,39 @@ To subscribe to specific domain events we should inherit from the IHandleDomainE
 
     }
     ```
+If you want a class to subscribe to several domain events (this may be breaks the SR principle ) we should inherit from  IHandleDomainEvents<T> interface and subscribe explicitly. In this example we combine both approachs.
+
+```cs
+    public class Match : HandleDomainEventsBase<PlayMade>, 
+        IHandleDomainEvents<InvalidPlay>
+    {
+     ...
+
+        public Match( IDomainEventDispatcher dispatcher):base( dispatcher)
+        {
+            domainEventDispatcher = dispatcher;
+            dispatcher.Subscribe<InvalidPlay>(this);
+        }
+        
+        ...
+        
+        public override void HandleEvent(PlayMade domainEvent)
+        {
+            SavePlay(domainEvent);
+
+            EvalOutcome();
+        }
+
+        public void HandleEvent(InvalidPlay domainEvent)
+        {
+            Console.WriteLine($"invalid play {domainEvent.Play.ToString()} made by {domainEvent.Player.ToString()}");
+        }
+    }
+    ```
 
 ### See a example app that uses domain events 
     
-    To see a running sample take a look to the StonePaperScissors app or specflow functional tests from the [github](https://github.com/pmilet/domainevents) repo 
+    To see a full sample take a look to the StonePaperScissors app or specflow functional tests from the [github](https://github.com/pmilet/domainevents) repo 
     
 
 
