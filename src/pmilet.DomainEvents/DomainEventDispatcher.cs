@@ -67,9 +67,11 @@ namespace pmilet.DomainEvents
                     var suscribersToThisEvent = this.Subscribers.Where(s => domainEventType == s.Key || domainEventType.IsSubclassOf(s.Key));
                     foreach (var subscriber in suscribersToThisEvent)
                     {
-                        if (subscriber.Value is HandleDomainEventsBase<T> subscriberOfBase)
+                         if (subscriber.Value is IHandleDomainEventsBase subscriberOfBase)
                             subscriberOfBase.HandleDomainEvent(domainEvent);
-                        if (subscriber.Value is IHandleDomainEvents<T> subscriberOfT)
+                        else if (subscriber.Value is HandleDomainEventsBase<T> subscriberOfBaseT)
+                            subscriberOfBaseT.HandleDomainEvent(domainEvent);
+                        else if (subscriber.Value is IHandleDomainEvents<T> subscriberOfT)
                             subscriberOfT.HandleEvent(domainEvent);
                     }
                 }
