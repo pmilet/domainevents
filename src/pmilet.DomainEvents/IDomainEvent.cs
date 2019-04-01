@@ -9,5 +9,6 @@ namespace pmilet.DomainEvents
         string AggregateSource { get; set; }
         DateTime CreatedOn { get; set; }
         string Version { get; set; }
+        string SubscriberId { get; }
     }
 }

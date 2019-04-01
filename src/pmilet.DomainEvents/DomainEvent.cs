@@ -6,26 +6,20 @@ namespace pmilet.DomainEvents
 {
     public class DomainEvent : IDomainEvent
     {
-        public DomainEvent(string source, string version)
+        public DomainEvent(string source, string version = "1.0", string subscriberId = null)
         {
             AggregateSource = source;
             Version = version;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
+            SubscriberId = subscriberId;
         }
 
-        public string AggregateSource
-        {
-            get; set;
-        }
+        public string AggregateSource { get; set; }
 
-        public DateTime CreatedOn
-        {
-            get; set;
-        }
+        public DateTime CreatedOn { get; set; }
 
-        public string Version
-        {
-            get; set;
-        }
+        public string Version { get; set; }
+
+        public string SubscriberId { get; }
     }
 }

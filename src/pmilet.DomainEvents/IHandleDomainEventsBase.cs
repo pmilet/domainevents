@@ -8,7 +8,6 @@ namespace pmilet.DomainEvents
 {
     public interface IHandleDomainEventsBase
     {
-        Guid SubscriberId { get; }
         void HandleDomainEvent(IDomainEvent domainEvent);
     }
 }

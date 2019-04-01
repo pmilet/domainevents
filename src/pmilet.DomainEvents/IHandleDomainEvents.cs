@@ -4,12 +4,14 @@ using System;
 
 namespace pmilet.DomainEvents
 {
-    
 
-    public interface IHandleDomainEvents<T>      
+
+    public interface IHandleDomainEvents<T>
     {
+        string SubscriberId { get; }
+
         void HandleEvent(T domainEvent);
     }
-   
+
 
 }

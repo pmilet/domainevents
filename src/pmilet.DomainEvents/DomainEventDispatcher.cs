@@ -8,32 +8,35 @@ using System.Threading;
 
 namespace pmilet.DomainEvents
 {
+    internal struct Subscriber
+    {
+        public string SubscriberId { get; set; }
+        public Type SubscriberType { get; set; }
+    }
+
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
         private ConcurrentBag<IDomainEvent> _events = new ConcurrentBag<IDomainEvent>();
-        private ConcurrentDictionary<Type, object> _subscribers;
+        private ConcurrentDictionary<Subscriber, object> _subscribers;
         private bool _publishing;
 
         public DomainEventDispatcher()
         {
-            this._publishing = false;
+            _publishing = false;
         }
 
-        private ConcurrentDictionary<Type, object> Subscribers
+        private ConcurrentDictionary<Subscriber, object> Subscribers
         {
             get
             {
-                if (this._subscribers == null)
+                if (_subscribers == null)
                 {
-                    this._subscribers = new ConcurrentDictionary<Type, object>();
+                    _subscribers = new ConcurrentDictionary<Subscriber, object>();
                 }
 
-                return this._subscribers;
+                return _subscribers;
             }
-            set
-            {
-                this._subscribers = value;
-            }
+            set => _subscribers = value;
         }
 
         public void Add<T>(T domainEvent) where T : IDomainEvent
@@ -51,38 +54,46 @@ namespace pmilet.DomainEvents
                     Publish(typedEvent);
                 }
             }
-            var newBag = new ConcurrentBag<IDomainEvent>();
+            ConcurrentBag<IDomainEvent> newBag = new ConcurrentBag<IDomainEvent>();
             Interlocked.Exchange<ConcurrentBag<IDomainEvent>>(ref _events, newBag);
         }
 
         public void Publish<T>(T domainEvent) where T : IDomainEvent
         {
-            if (this.HasSubscribers() && domainEvent != null)
+            if (HasSubscribers() && domainEvent != null)
             {
                 try
                 {
-                    this._publishing = true;
+                    _publishing = true;
                     Type domainEventType = domainEvent.GetType();
-
-                    var suscribersToThisEvent = this.Subscribers.Where(s => domainEventType == s.Key || domainEventType.IsSubclassOf(s.Key));
-                    foreach (var subscriber in suscribersToThisEvent)
+                    IEnumerable<KeyValuePair<Subscriber, object>> suscribersToThisEvent = Subscribers.Where(s =>
+                            (domainEventType == s.Key.SubscriberType ||
+                            domainEventType.IsSubclassOf(s.Key.SubscriberType) ||
+                            (s.Key.SubscriberType.IsInterface && domainEventType.GetInterfaces().Contains(s.Key.SubscriberType))) &&
+                        (domainEvent.SubscriberId == null || domainEvent.SubscriberId == s.Key.SubscriberId));
+                    foreach (KeyValuePair<Subscriber, object> subscriber in suscribersToThisEvent)
                     {
-                         if (subscriber.Value is IHandleDomainEventsBase subscriberOfBase)
-                            subscriberOfBase.HandleDomainEvent(domainEvent);
-                        else if (subscriber.Value is HandleDomainEventsBase<T> subscriberOfBaseT)
-                            subscriberOfBaseT.HandleDomainEvent(domainEvent);
-                        else if (subscriber.Value is IHandleDomainEvents<T> subscriberOfT)
+                        if (subscriber.Value is IHandleDomainEvents<T> subscriberOfT)
+                        {
                             subscriberOfT.HandleEvent(domainEvent);
+                        }
+                        else if (subscriber.Value is HandleDomainEventsBase<T> subscriberOfBaseT)
+                        {
+                            subscriberOfBaseT.HandleDomainEvent(domainEvent);
+                        }
+                        else if (subscriber.Value is IHandleDomainEventsBase subscriberOfBase)
+                        {
+                            subscriberOfBase.HandleDomainEvent(domainEvent);
+                        }
                     }
                 }
                 finally
                 {
                     DomainEventSource.Current.Log(domainEvent);
-                    this._publishing = false;
+                    _publishing = false;
                 }
             }
         }
-
 
         private bool IsDomainEvent(Type domainEventType)
         {
@@ -91,28 +102,28 @@ namespace pmilet.DomainEvents
 
         public void Reset()
         {
-            if (!this._publishing)
+            if (!_publishing)
             {
-                this.Subscribers = null;
+                Subscribers = null;
             }
         }
 
         public void Subscribe<T>(IHandleDomainEvents<T> subscriber) where T : IDomainEvent
         {
-            if (!this._publishing && !Registered<T>(subscriber))
+            if (!_publishing && !Registered<T>(subscriber))
             {
-                this.Subscribers.GetOrAdd(typeof(T), subscriber as IHandleDomainEvents<T>);
+                Subscribers.GetOrAdd(new Subscriber { SubscriberType = typeof(T), SubscriberId = subscriber.SubscriberId }, subscriber as IHandleDomainEvents<T>);
             }
         }
 
         private bool Registered<T>(IHandleDomainEvents<T> subscriber)
         {
-            return this.Subscribers.Where(s => s.Key == typeof(T)).Any();
+            return Subscribers.Where(s => s.Key.SubscriberType == typeof(T) && subscriber.SubscriberId == s.Key.SubscriberId).Any();
         }
 
-        bool HasSubscribers()
+        private bool HasSubscribers()
         {
-            return this._subscribers != null && this.Subscribers.Count != 0;
+            return _subscribers != null && Subscribers.Count != 0;
         }
     }
 }
