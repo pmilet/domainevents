@@ -99,7 +99,7 @@ namespace pmilet.DomainEvents
         {
             if (!_publishing)
             {
-                Subscribers = null!;
+                _subscribers = null;
             }
         }
 
