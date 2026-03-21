@@ -10,14 +10,14 @@ namespace pmilet.DomainEvents
 {
     internal struct Subscriber
     {
-        public string SubscriberId { get; set; }
+        public string? SubscriberId { get; set; }
         public Type SubscriberType { get; set; }
     }
 
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
         private ConcurrentBag<IDomainEvent> _events = new ConcurrentBag<IDomainEvent>();
-        private ConcurrentDictionary<Subscriber, object> _subscribers;
+        private ConcurrentDictionary<Subscriber, object>? _subscribers;
         private bool _publishing;
 
         public DomainEventDispatcher()
@@ -95,16 +95,11 @@ namespace pmilet.DomainEvents
             }
         }
 
-        private bool IsDomainEvent(Type domainEventType)
-        {
-            return typeof(DomainEvent).IsSubclassOf(domainEventType);
-        }
-
         public void Reset()
         {
             if (!_publishing)
             {
-                Subscribers = null;
+                Subscribers = null!;
             }
         }
 

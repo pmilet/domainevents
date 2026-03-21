@@ -23,14 +23,14 @@ namespace StonePaperScissorsApp
                 do
                 {
                     Console.WriteLine("Jugador1: Piedra(1) Papel(2) o Tijera(3)");
-                    var s = Console.ReadLine();
+                    var s = Console.ReadLine() ?? string.Empty;
                     jugada = JugadaSeleccionada(s);
                     j1.Play(jugada);
                     j1.Confirm();
                 } while (jugada == PlayType.None);
                 do {
                     Console.WriteLine("Jugador2: Piedra(1) Papel(2) o Tijera(3)");
-                    var s = Console.ReadLine();
+                    var s = Console.ReadLine() ?? string.Empty;
                     jugada = JugadaSeleccionada(s);
                     j2.Play(jugada);
                     j2.Confirm();
