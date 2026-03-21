@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace pmilet.DomainEvents
 {
@@ -10,7 +6,7 @@ namespace pmilet.DomainEvents
         IHandleDomainEvents<T>,
         IHandleDomainEventsBase where T : IDomainEvent
     {
-        public string SubscriberId { get; }
+        public string? SubscriberId { get; }
 
         public HandleDomainEventsBase(IDomainEventDispatcher domainEventDispatcher, string subscriberId)
         {

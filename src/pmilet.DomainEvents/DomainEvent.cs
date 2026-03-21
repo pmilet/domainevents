@@ -6,7 +6,7 @@ namespace pmilet.DomainEvents
 {
     public class DomainEvent : IDomainEvent
     {
-        public DomainEvent(string source, string version = "1.0", string subscriberId = null)
+        public DomainEvent(string source, string version = "1.0", string? subscriberId = null)
         {
             AggregateSource = source;
             Version = version;
@@ -20,6 +20,6 @@ namespace pmilet.DomainEvents
 
         public string Version { get; set; }
 
-        public string SubscriberId { get; }
+        public string? SubscriberId { get; }
     }
 }
